@@ -6,6 +6,7 @@
   .wrapper {
     @apply m-5;
   }
+
   .btn {
     @apply px-1;
     @apply uppercase;
@@ -13,5 +14,20 @@
     @apply border-gray-300;
     @apply rounded-md;
     @apply hover:border-gray-400;
+  }
+
+  select {
+    @apply border-2;
+    @apply border-gray-300;
+    @apply border-opacity-75;
+    @apply rounded-md;
+    @apply cursor-pointer;
+    @apply focus:outline-none;
+    @apply focus:border-gray-400;
+    @apply hover:border-gray-400;
+  }
+
+  select > option {
+    @apply cursor-pointer;
   }
 }
