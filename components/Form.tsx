@@ -53,7 +53,7 @@ export default function Form() {
   }
 
   return (
-    <form onSubmit={handleSubmitForm}>
+    <form onSubmit={handleSubmitForm} className="mt-10">
       <FormElement
         show={currentStep === 1}
         title="Choose course type"
