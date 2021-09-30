@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
+import Form from '~/components/Form'
 import Header from '~/components/Header'
 
 const Home: NextPage = () => {
@@ -12,8 +13,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex justify-center">
+      <main className="flex flex-col items-center">
         <Header />
+
+        <Form />
       </main>
     </div>
   )
