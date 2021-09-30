@@ -1,0 +1,7 @@
+commitlint.config.js
+stylelint.config.js
+next.config.js
+.eslintrc.js
+node_modules
+coverage
+dist
