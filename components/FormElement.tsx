@@ -39,9 +39,12 @@ export default function FormElement({
 
   if (!show)
     return (
-      <div className="flex justify-start mt-8 w-96">
-        <div className="flex items-center justify-center w-10 h-10 text-2xl font-semibold bg-gray-300 rounded-full">
-          {stepNumber}
+      <div className="flex justify-start h-16 mt-2 w-96">
+        <div className="flex flex-col items-center">
+          <div className="flex items-center justify-center w-10 h-10 text-2xl font-semibold bg-gray-300 rounded-full">
+            {stepNumber}
+          </div>
+          <div className="w-0.5 h-1/6 mt-3 bg-gray-300"></div>
         </div>
 
         <div className="flex flex-col justify-between mt-1 ml-8">
@@ -51,18 +54,21 @@ export default function FormElement({
     )
 
   return (
-    <div className="flex justify-start mt-8 w-96">
-      <div className="flex items-center justify-center w-10 h-10 text-2xl font-semibold bg-gray-300 rounded-full">
-        {stepNumber}
+    <div className="flex justify-start h-40 mt-2 w-96">
+      <div className="flex flex-col items-center">
+        <div className="flex items-center justify-center w-10 h-10 text-2xl font-semibold bg-gray-300 rounded-full">
+          {stepNumber}
+        </div>
+        <div className="w-0.5 h-2/3 mt-3 bg-gray-300"></div>
       </div>
 
-      <div className="flex flex-col justify-between mt-1 ml-8 h-28">
+      <div className="flex flex-col justify-between h-full mt-1 ml-8">
         <label className="text-xl font-semibold">{title}</label>
 
         {options && !checkbox ? (
           <select name={name} value={value} onChange={onChange as OnChange}>
             {options?.map((option, index) => (
-              <option value={option} key={index}>
+              <option value={option} key={index} className="cursor-pointer">
                 {option}
               </option>
             ))}
@@ -93,7 +99,7 @@ export default function FormElement({
 
         <div>
           {!!goToBackStep && (
-            <button className="btn" onClick={goToBackStep}>
+            <button className="mr-4 btn" onClick={goToBackStep}>
               Back
             </button>
           )}

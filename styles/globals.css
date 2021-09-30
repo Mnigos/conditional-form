@@ -15,6 +15,9 @@
     @apply border-opacity-75;
     @apply rounded-md;
     @apply hover:border-gray-400;
+    @apply transition;
+    @apply duration-500;
+    @apply ease-in-out;
   }
 
   select, input {
@@ -27,9 +30,15 @@
     @apply focus:outline-none;
     @apply focus:border-gray-400;
     @apply hover:border-gray-400;
+    @apply transition;
+    @apply duration-500;
+    @apply ease-in-out;
   }
 
-  select > option {
+  select > * {
     @apply cursor-pointer;
+    @apply transition;
+    @apply duration-500;
+    @apply ease-in-out;
   }
 }
