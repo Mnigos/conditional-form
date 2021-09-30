@@ -7,6 +7,7 @@ import { InitialFormState } from '~/interfaces/initialFormState'
 const initialFormState: InitialFormState = {
   courseType: 'HTML Course',
   levelOfAdvancement: 'Beginner',
+  yourSkills: [],
   name: '',
 }
 
@@ -22,6 +23,12 @@ export default function Form() {
     'Vue Course',
   ]
 
+  const yourSkillsOptions = [
+    'Knowledge of HTML',
+    'Knowledge of CSS',
+    'Advanced JavaScript knowlage',
+  ]
+
   const levelOfAdvancementOptions = ['Beginner', 'Advanced']
 
   const goToNextStep = () => setStep(step => step + 1)
@@ -31,6 +38,13 @@ export default function Form() {
     setFormValues({
       ...formValues,
       [event.target.name]: event.target.value,
+    })
+  }
+
+  function handleYourSkillsChange(value: string[]): void {
+    setFormValues({
+      ...formValues,
+      yourSkills: value,
     })
   }
 
@@ -65,9 +79,22 @@ export default function Form() {
 
       <FormElement
         show={currentStep === 3}
+        title="Your Skills"
+        name="yourSkills"
+        stepNumber={3}
+        checkOnChange={handleYourSkillsChange}
+        value={formValues.yourSkills}
+        goToNextStep={goToNextStep}
+        goToBackStep={goToBackStep}
+        options={yourSkillsOptions}
+        checkbox
+      />
+
+      <FormElement
+        show={currentStep === 4}
         title="Your Name"
         name="name"
-        stepNumber={3}
+        stepNumber={4}
         onChange={handleSelectChange}
         value={formValues.name}
         goToNextStep={goToNextStep}
