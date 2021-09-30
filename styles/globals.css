@@ -12,6 +12,7 @@
     @apply uppercase;
     @apply border-2;
     @apply border-gray-300;
+    @apply border-opacity-75;
     @apply rounded-md;
     @apply hover:border-gray-400;
   }
