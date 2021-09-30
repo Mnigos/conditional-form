@@ -5,11 +5,13 @@ interface FormElementProps {
   title: string
   name: string
   stepNumber: number
-  onChange: SelectHTMLAttributes<HTMLSelectElement>['onChange']
-  value: SelectHTMLAttributes<HTMLSelectElement>['value']
+  onChange: SelectHTMLAttributes<
+    HTMLSelectElement | HTMLInputElement
+  >['onChange']
+  value: SelectHTMLAttributes<HTMLSelectElement | HTMLInputElement>['value']
   goToNextStep: DOMAttributes<HTMLButtonElement>['onChange']
   goToBackStep?: DOMAttributes<HTMLButtonElement>['onChange']
-  options: string[]
+  options?: string[]
 }
 
 export default function FormElement({
@@ -45,13 +47,22 @@ export default function FormElement({
       <div className="flex flex-col justify-between mt-1 ml-8 h-28">
         <label className="text-xl font-semibold">{title}</label>
 
-        <select name={name} value={value} onChange={onChange}>
-          {options.map((option, index) => (
-            <option value={option} key={index}>
-              {option}
-            </option>
-          ))}
-        </select>
+        {options ? (
+          <select name={name} value={value} onChange={onChange}>
+            {options?.map((option, index) => (
+              <option value={option} key={index}>
+                {option}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <input
+            value={value}
+            name={name}
+            onChange={onChange}
+            placeholder={title}
+          />
+        )}
 
         <div>
           {!!goToBackStep && (
