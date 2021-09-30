@@ -1,44 +1,66 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
+
+import FormElement from './FormElement'
 
 import { InitialFormState } from '~/interfaces/initialFormState'
 
-const initialFormState: InitialFormState = { courseType: undefined }
+const initialFormState: InitialFormState = {
+  courseType: undefined,
+  levelOfAdvancement: undefined,
+}
 
 export default function Form() {
   const [formValues, setFormValues] = useState(initialFormState)
+  const [currentStep, setStep] = useState(1)
 
-  function handleCourseTypeChange(event: ChangeEvent<HTMLSelectElement>): void {
+  const courseTypeOptions = [
+    'HTML Course',
+    'CSS Course',
+    'JavaScript Course',
+    'React Course',
+    'Vue Course',
+  ]
+
+  const levelOfAdvancementOptions = ['Beginner', 'Advanced']
+
+  const goToNextStep = () => setStep(step => step + 1)
+  const goToBackStep = () => setStep(step => step - 1)
+
+  function handleSelectChange(event: ChangeEvent<HTMLSelectElement>): void {
     setFormValues({
       ...formValues,
       [event.target.name]: event.target.value,
     })
   }
 
+  function handleSubmitForm(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+  }
+
   return (
-    <form className="flex items-center w-64 justify-evenly">
-      <div className="flex items-center justify-center w-10 h-10 text-2xl font-semibold bg-gray-300 rounded-full">
-        1
-      </div>
-      <div className="flex flex-col h-32 justify-evenly">
-        <label className="text-xl font-semibold">Choose course type</label>
+    <form onSubmit={handleSubmitForm}>
+      <FormElement
+        show={currentStep === 1}
+        title="Choose course type"
+        name="courseType"
+        stepNumber={1}
+        onChange={handleSelectChange}
+        value={formValues.courseType}
+        goToNextStep={goToNextStep}
+        options={courseTypeOptions}
+      />
 
-        <select
-          className="border-2 border-gray-300 border-opacity-75 rounded-md cursor-pointer focus:outline-none focus:border-gray-400 hover:border-gray-400"
-          name="courseType"
-          value={formValues.courseType}
-          onChange={handleCourseTypeChange}
-        >
-          <option value="HTML Course">HTML Course</option>
-          <option value="CSS Course">CSS Course</option>
-          <option value="JavaScript Course">JavaScript Course</option>
-          <option value="React Course">React Course</option>
-          <option value="Vue Course">Vue Course</option>
-        </select>
-
-        <div>
-          <button className="btn">Next</button>
-        </div>
-      </div>
+      <FormElement
+        show={currentStep === 2}
+        title="Level of advancement"
+        name="levelOfAdvancement"
+        stepNumber={2}
+        onChange={handleSelectChange}
+        value={formValues.levelOfAdvancement}
+        goToNextStep={goToNextStep}
+        goToBackStep={goToBackStep}
+        options={levelOfAdvancementOptions}
+      />
     </form>
   )
 }
