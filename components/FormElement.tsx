@@ -1,4 +1,4 @@
-import { ChangeEvent, DOMAttributes, SelectHTMLAttributes } from 'react'
+import { ChangeEvent, SelectHTMLAttributes } from 'react'
 
 type OnChange = SelectHTMLAttributes<
   HTMLSelectElement | HTMLInputElement
@@ -13,8 +13,8 @@ interface FormElementProps {
   value:
     | SelectHTMLAttributes<HTMLSelectElement | HTMLInputElement>['value']
     | string[]
-  goToNextStep: DOMAttributes<HTMLButtonElement>['onChange']
-  goToBackStep?: DOMAttributes<HTMLButtonElement>['onChange']
+  goToNextStep: () => void
+  goToBackStep?: () => void
   options?: string[]
   checkbox?: boolean
 }
@@ -99,11 +99,15 @@ export default function FormElement({
 
         <div>
           {!!goToBackStep && (
-            <button className="mr-4 btn" onClick={goToBackStep}>
+            <button className="mr-4 btn" onClick={goToNextStep}>
               Back
             </button>
           )}
-          <button className="btn" onClick={goToNextStep}>
+          <button
+            className={value ? 'btn' : 'btn-disabled cursor-not-allowed'}
+            disabled={!value}
+            onClick={goToNextStep}
+          >
             Next
           </button>
         </div>
