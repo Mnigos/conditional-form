@@ -20,6 +20,16 @@
     @apply ease-in-out;
   }
 
+  .btn-disabled {
+    @apply px-1;
+    @apply uppercase;
+    @apply text-gray-600;
+    @apply border-2;
+    @apply border-gray-300;
+    @apply border-opacity-75;
+    @apply rounded-md;
+  }
+
   select, input {
     @apply border-2;
     @apply px-1;
@@ -30,13 +40,6 @@
     @apply focus:outline-none;
     @apply focus:border-gray-400;
     @apply hover:border-gray-400;
-    @apply transition;
-    @apply duration-500;
-    @apply ease-in-out;
-  }
-
-  select > * {
-    @apply cursor-pointer;
     @apply transition;
     @apply duration-500;
     @apply ease-in-out;
