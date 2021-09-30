@@ -1,17 +1,22 @@
-import { DOMAttributes, SelectHTMLAttributes } from 'react'
+import { ChangeEvent, DOMAttributes, SelectHTMLAttributes } from 'react'
 
+type OnChange = SelectHTMLAttributes<
+  HTMLSelectElement | HTMLInputElement
+>['onChange']
 interface FormElementProps {
   show: boolean
   title: string
   name: string
   stepNumber: number
-  onChange: SelectHTMLAttributes<
-    HTMLSelectElement | HTMLInputElement
-  >['onChange']
-  value: SelectHTMLAttributes<HTMLSelectElement | HTMLInputElement>['value']
+  onChange?: OnChange
+  checkOnChange?: (value: string[]) => void
+  value:
+    | SelectHTMLAttributes<HTMLSelectElement | HTMLInputElement>['value']
+    | string[]
   goToNextStep: DOMAttributes<HTMLButtonElement>['onChange']
   goToBackStep?: DOMAttributes<HTMLButtonElement>['onChange']
   options?: string[]
+  checkbox?: boolean
 }
 
 export default function FormElement({
@@ -21,13 +26,20 @@ export default function FormElement({
   stepNumber,
   options,
   onChange,
+  checkOnChange,
   value,
   goToNextStep,
   goToBackStep,
+  checkbox,
 }: FormElementProps) {
+  function handleCheckBoxChange(event: ChangeEvent<HTMLInputElement>) {
+    ;(value as string[]).push(event.target.value)
+    if (value && checkOnChange) checkOnChange(value as string[])
+  }
+
   if (!show)
     return (
-      <div className="flex justify-start mt-8 w-72">
+      <div className="flex justify-start mt-8 w-96">
         <div className="flex items-center justify-center w-10 h-10 text-2xl font-semibold bg-gray-300 rounded-full">
           {stepNumber}
         </div>
@@ -39,7 +51,7 @@ export default function FormElement({
     )
 
   return (
-    <div className="flex justify-start mt-8 w-72">
+    <div className="flex justify-start mt-8 w-96">
       <div className="flex items-center justify-center w-10 h-10 text-2xl font-semibold bg-gray-300 rounded-full">
         {stepNumber}
       </div>
@@ -47,14 +59,29 @@ export default function FormElement({
       <div className="flex flex-col justify-between mt-1 ml-8 h-28">
         <label className="text-xl font-semibold">{title}</label>
 
-        {options ? (
-          <select name={name} value={value} onChange={onChange}>
+        {options && !checkbox ? (
+          <select name={name} value={value} onChange={onChange as OnChange}>
             {options?.map((option, index) => (
               <option value={option} key={index}>
                 {option}
               </option>
             ))}
           </select>
+        ) : // eslint-disable-next-line unicorn/no-nested-ternary
+        checkbox ? (
+          <>
+            {options?.map((option, index) => (
+              <span key={index} className="flex items-center">
+                <input
+                  type="checkbox"
+                  className="w-6 h-4"
+                  value={option}
+                  onChange={handleCheckBoxChange}
+                />
+                <label>{option}</label>
+              </span>
+            ))}
+          </>
         ) : (
           <input
             value={value}
