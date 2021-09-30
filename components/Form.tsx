@@ -5,8 +5,9 @@ import FormElement from './FormElement'
 import { InitialFormState } from '~/interfaces/initialFormState'
 
 const initialFormState: InitialFormState = {
-  courseType: undefined,
-  levelOfAdvancement: undefined,
+  courseType: 'HTML Course',
+  levelOfAdvancement: 'Beginner',
+  name: '',
 }
 
 export default function Form() {
@@ -60,6 +61,17 @@ export default function Form() {
         goToNextStep={goToNextStep}
         goToBackStep={goToBackStep}
         options={levelOfAdvancementOptions}
+      />
+
+      <FormElement
+        show={currentStep === 3}
+        title="Your Name"
+        name="name"
+        stepNumber={3}
+        onChange={handleSelectChange}
+        value={formValues.name}
+        goToNextStep={goToNextStep}
+        goToBackStep={goToBackStep}
       />
     </form>
   )
