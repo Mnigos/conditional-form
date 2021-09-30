@@ -2,21 +2,47 @@
   "root": true,
   "env": {
     "browser": true,
-    "es6": true
+    "es2021": true
   },
-  "plugins": ["prettier", "eslint-plugin-import-helpers"],
+  "plugins": ["prettier", "eslint-plugin-import-helpers", "react", "@typescript-eslint"],
   "extends": [
     "prettier",
+    "plugin:react/recommended",
     "plugin:sonarjs/recommended",
     "plugin:import/warnings",
     "plugin:import/typescript",
     "plugin:unicorn/recommended",
     "next/core-web-vitals"
   ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "paths": ["."],
+        "extensions": [".js", ".ts", ".tsx", ".jsx"]
+      }
+    }
+  },
   "rules": {
     "prettier/prettier": "warn",
     "prefer-const": "warn",
     "no-console": "warn",
+    "import/order": [
+      "warn",
+      {
+        "newlines-between": "always"
+      }
+    ],
     "unicorn/no-abusive-eslint-disable": "off",
     "@typescript-eslint/no-unused-vars": "warn",
     "unicorn/prevent-abbreviations": "off",
@@ -31,6 +57,8 @@
         }
       }
     ],
-    "import-helpers/order-imports": "off"
+    "import-helpers/order-imports": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off"
   }
 }
