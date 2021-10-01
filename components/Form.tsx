@@ -20,6 +20,7 @@ const initialFormState: InitialFormState = {
 export default function Form() {
   const [formValues, setFormValues] = useState(initialFormState)
   const [currentStep, setStep] = useState(1)
+  const [response, setResponse] = useState('')
 
   const courseTypeOptions = [
     HTMLCourse,
@@ -51,6 +52,19 @@ export default function Form() {
 
   const goToNextStep = () => setStep(step => step + 1)
   const goToBackStep = () => setStep(step => step - 1)
+
+  async function addUser(user: InitialFormState) {
+    console.log(JSON.stringify({ user }))
+    await fetch('/api/user', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user }),
+    })
+      .then(async res => setResponse((await res?.json()) ?? ''))
+      .catch(error => setResponse(error.body))
+  }
 
   function handleSelectChange(event: ChangeEvent<HTMLSelectElement>): void {
     setFormValues({
@@ -141,6 +155,36 @@ export default function Form() {
           </CSSTransition>
         )
       })}
+      {currentStep > stepNumber && (
+        <>
+          <button className="btn" onClick={() => addUser(formValues)}>
+            Submit
+          </button>
+          <div className="flex flex-col ml-16">
+            <span className="mt-4">
+              <b>Course Type: </b>
+              <span>{formValues.courseType}</span>
+            </span>
+
+            <span className="mt-4">
+              <b>Level of advancement: </b>
+              <span>{formValues.levelOfAdvancement}</span>
+            </span>
+
+            {formValues.yourSkills.length > 0 && (
+              <span className="mt-4">
+                <b>Your Skills: </b>
+                <span>{formValues.yourSkills}</span>
+              </span>
+            )}
+
+            <span className="mt-4">
+              <b>Your Name: </b>
+              <span>{formValues.name}</span>
+            </span>
+          </div>
+        </>
+      )}
     </form>
   )
 }
