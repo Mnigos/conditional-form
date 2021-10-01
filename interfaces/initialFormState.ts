@@ -1,6 +1,6 @@
 export interface InitialFormState {
-  courseType: string | undefined
-  levelOfAdvancement: string | undefined
-  yourSkills: string[] | undefined
-  name: string | undefined
+  courseType: string
+  levelOfAdvancement: string
+  yourSkills: string[]
+  name: string
 }
