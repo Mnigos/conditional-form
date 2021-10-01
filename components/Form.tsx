@@ -116,7 +116,6 @@ export default function Form() {
       className="mt-10 duration-300 ease-in-out trasition-all"
     >
       {formElements.map((element, i) => {
-        console.log(stepNumber)
         if (!element.show()) ++stepNumber
         return (
           <CSSTransition
