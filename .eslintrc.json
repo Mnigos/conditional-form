@@ -48,6 +48,7 @@
     "unicorn/prevent-abbreviations": "off",
     "jest/prefer-expect-assertions": "off",
     "unicorn/consistent-function-scoping": "off",
+    "unicorn/no-null": "off",
     "unicorn/filename-case": [
       "warn",
       {
