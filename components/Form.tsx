@@ -52,54 +52,63 @@ export default function Form() {
     event.preventDefault()
   }
 
+  const formElements = [
+    {
+      title: 'Choose course type',
+      name: 'courseType',
+      stepNumber: 1,
+      value: formValues.courseType,
+      options: courseTypeOptions,
+      goToNextStep,
+    },
+    {
+      title: 'Level of advancement',
+      name: 'levelOfAdvancement',
+      stepNumber: 2,
+      value: formValues.levelOfAdvancement,
+      options: levelOfAdvancementOptions,
+      goToNextStep,
+      goToBackStep,
+    },
+    {
+      title: 'Your Skills',
+      name: 'yourSkills',
+      stepNumber: 3,
+      checkOnChange: handleYourSkillsChange,
+      value: formValues.yourSkills,
+      options: yourSkillsOptions,
+      checkbox: true,
+      goToNextStep,
+      goToBackStep,
+    },
+    {
+      title: 'Your Name',
+      name: 'name',
+      stepNumber: 4,
+      value: formValues.name,
+      goToNextStep,
+      goToBackStep,
+    },
+  ]
+
   return (
     <form onSubmit={handleSubmitForm} className="mt-10">
-      <FormElement
-        show={currentStep === 1}
-        title="Choose course type"
-        name="courseType"
-        stepNumber={1}
-        onChange={handleSelectChange}
-        value={formValues.courseType}
-        goToNextStep={goToNextStep}
-        options={courseTypeOptions}
-      />
-
-      <FormElement
-        show={currentStep === 2}
-        title="Level of advancement"
-        name="levelOfAdvancement"
-        stepNumber={2}
-        onChange={handleSelectChange}
-        value={formValues.levelOfAdvancement}
-        goToNextStep={goToNextStep}
-        goToBackStep={goToBackStep}
-        options={levelOfAdvancementOptions}
-      />
-
-      <FormElement
-        show={currentStep === 3}
-        title="Your Skills"
-        name="yourSkills"
-        stepNumber={3}
-        checkOnChange={handleYourSkillsChange}
-        value={formValues.yourSkills}
-        goToNextStep={goToNextStep}
-        goToBackStep={goToBackStep}
-        options={yourSkillsOptions}
-        checkbox
-      />
-
-      <FormElement
-        show={currentStep === 4}
-        title="Your Name"
-        name="name"
-        stepNumber={4}
-        onChange={handleSelectChange}
-        value={formValues.name}
-        goToNextStep={goToNextStep}
-        goToBackStep={goToBackStep}
-      />
+      {formElements.map((element, index) => (
+        <FormElement
+          key={index}
+          show={currentStep === element.stepNumber}
+          title={element.title}
+          name={element.name}
+          stepNumber={element.stepNumber}
+          onChange={element.checkOnChange ? undefined : handleSelectChange}
+          checkOnChange={element.checkOnChange}
+          value={element.value}
+          checkbox={element.checkbox}
+          options={element.options}
+          goToNextStep={element.goToNextStep}
+          goToBackStep={element.goToBackStep}
+        />
+      ))}
     </form>
   )
 }
