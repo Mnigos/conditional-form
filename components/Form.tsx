@@ -118,7 +118,6 @@ export default function Form() {
             key={i}
             stepNumber={++stepNumber}
             show={currentStep === stepNumber}
-            // noHeader={element.show ? element.show() : false}
             title={element.title}
             name={element.name}
             onChange={element.checkOnChange ? undefined : handleSelectChange}
