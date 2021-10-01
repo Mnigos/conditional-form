@@ -99,7 +99,7 @@ export default function FormElement({
 
         <div>
           {!!goToBackStep && (
-            <button className="mr-4 btn" onClick={goToNextStep}>
+            <button className="mr-4 btn" onClick={goToBackStep}>
               Back
             </button>
           )}
