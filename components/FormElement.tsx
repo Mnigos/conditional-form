@@ -34,7 +34,9 @@ export default function FormElement({
   checkbox,
 }: FormElementProps) {
   function handleCheckBoxChange(event: ChangeEvent<HTMLInputElement>) {
-    ;(value as string[]).push(event.target.value)
+    if (event.target.checked) (value as string[]).push(event.target.value)
+    else value = (value as string[]).filter(el => el !== event.target.value)
+
     if (value && checkOnChange) checkOnChange(value as string[])
   }
 
