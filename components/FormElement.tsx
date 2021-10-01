@@ -35,6 +35,7 @@ export default function FormElement({
   checkbox,
 }: FormElementProps) {
   function handleCheckBoxChange(event: ChangeEvent<HTMLInputElement>) {
+    if (!show) value = []
     if (event.target.checked) (value as string[]).push(event.target.value)
     else value = (value as string[]).filter(el => el !== event.target.value)
 
@@ -58,6 +59,13 @@ export default function FormElement({
 
       <div className="flex flex-col justify-between h-full mt-1 ml-8">
         <label className="text-xl font-semibold">{title}</label>
+        {!show && (
+          <p>
+            {typeof value === 'string'
+              ? value
+              : (value as string[])?.join(', ')}
+          </p>
+        )}
 
         <CSSTransition in={show} timeout={150} classNames="form" unmountOnExit>
           <>
