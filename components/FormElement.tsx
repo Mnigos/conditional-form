@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-nested-ternary */
 import { ChangeEvent, SelectHTMLAttributes } from 'react'
 
 type OnChange = SelectHTMLAttributes<
@@ -73,8 +74,7 @@ export default function FormElement({
               </option>
             ))}
           </select>
-        ) : // eslint-disable-next-line unicorn/no-nested-ternary
-        checkbox ? (
+        ) : checkbox ? (
           <>
             {options?.map((option, index) => (
               <span key={index} className="flex items-center">
@@ -104,8 +104,21 @@ export default function FormElement({
             </button>
           )}
           <button
-            className={value ? 'btn' : 'btn-disabled cursor-not-allowed'}
-            disabled={!value}
+            className={
+              checkbox
+                ? value?.toString() === options?.toString()
+                  ? 'btn'
+                  : 'btn-disabled cursor-not-allowed'
+                : value
+                ? 'btn'
+                : 'btn-disabled cursor-not-allowed'
+            }
+            disabled={
+              checkbox
+                ? (value as string[])?.sort().toString() !==
+                  options?.sort().toString()
+                : !value
+            }
             onClick={goToNextStep}
           >
             Next
