@@ -4,8 +4,13 @@ import FormElement from './FormElement'
 
 import { InitialFormState } from '~/interfaces/initialFormState'
 
+const HTMLCourse = 'HTML Course'
+const ReactCourse = 'React Course'
+const VueCourse = 'Vue Course'
+const HTMLKnowledge = 'Knowledge of HTML'
+
 const initialFormState: InitialFormState = {
-  courseType: 'HTML Course',
+  courseType: HTMLCourse,
   levelOfAdvancement: 'Beginner',
   yourSkills: [],
   name: '',
@@ -16,20 +21,32 @@ export default function Form() {
   const [currentStep, setStep] = useState(1)
 
   const courseTypeOptions = [
-    'HTML Course',
+    HTMLCourse,
     'CSS Course',
     'JavaScript Course',
-    'React Course',
-    'Vue Course',
+    ReactCourse,
+    VueCourse,
   ]
 
-  const yourSkillsOptions = [
-    'Knowledge of HTML',
-    'Knowledge of CSS',
-    'Advanced JavaScript knowlage',
-  ]
+  const levelOfAdvancementOptions = [ReactCourse, VueCourse].includes(
+    formValues.courseType
+  )
+    ? ['Beginner', 'Intermediate', 'Advanced']
+    : ['Beginner', 'Advanced']
 
-  const levelOfAdvancementOptions = ['Beginner', 'Advanced']
+  const yourSkillsOptions = (() => {
+    if ([ReactCourse, VueCourse].includes(formValues.courseType))
+      return [HTMLKnowledge, 'Knowledge of CSS', 'Advanced JavaScript knowlage']
+
+    if (formValues.courseType === 'JavaScript Course')
+      return ['Intermediate', 'Advanced'].includes(
+        formValues.levelOfAdvancement
+      )
+        ? [HTMLKnowledge, 'Knowledge of CSS']
+        : [HTMLKnowledge]
+
+    if (formValues.courseType === 'CSS Course') return [HTMLKnowledge]
+  })()
 
   const goToNextStep = () => setStep(step => step + 1)
   const goToBackStep = () => setStep(step => step - 1)
@@ -56,7 +73,7 @@ export default function Form() {
     {
       title: 'Choose course type',
       name: 'courseType',
-      stepNumber: 1,
+      show: () => false,
       value: formValues.courseType,
       options: courseTypeOptions,
       goToNextStep,
@@ -64,7 +81,7 @@ export default function Form() {
     {
       title: 'Level of advancement',
       name: 'levelOfAdvancement',
-      stepNumber: 2,
+      show: () => formValues.courseType === HTMLCourse,
       value: formValues.levelOfAdvancement,
       options: levelOfAdvancementOptions,
       goToNextStep,
@@ -73,7 +90,7 @@ export default function Form() {
     {
       title: 'Your Skills',
       name: 'yourSkills',
-      stepNumber: 3,
+      show: () => !yourSkillsOptions,
       checkOnChange: handleYourSkillsChange,
       value: formValues.yourSkills,
       options: yourSkillsOptions,
@@ -84,31 +101,36 @@ export default function Form() {
     {
       title: 'Your Name',
       name: 'name',
-      stepNumber: 4,
+      show: () => false,
       value: formValues.name,
       goToNextStep,
       goToBackStep,
     },
   ]
+  let stepNumber = 0
 
   return (
     <form onSubmit={handleSubmitForm} className="mt-10">
-      {formElements.map((element, index) => (
-        <FormElement
-          key={index}
-          show={currentStep === element.stepNumber}
-          title={element.title}
-          name={element.name}
-          stepNumber={element.stepNumber}
-          onChange={element.checkOnChange ? undefined : handleSelectChange}
-          checkOnChange={element.checkOnChange}
-          value={element.value}
-          checkbox={element.checkbox}
-          options={element.options}
-          goToNextStep={element.goToNextStep}
-          goToBackStep={element.goToBackStep}
-        />
-      ))}
+      {formElements.map((element, i) => {
+        if (element.show()) return
+        return (
+          <FormElement
+            key={i}
+            stepNumber={++stepNumber}
+            show={currentStep === stepNumber}
+            // noHeader={element.show ? element.show() : false}
+            title={element.title}
+            name={element.name}
+            onChange={element.checkOnChange ? undefined : handleSelectChange}
+            checkOnChange={element.checkOnChange}
+            value={element.value}
+            checkbox={element.checkbox}
+            options={element.options}
+            goToNextStep={element.goToNextStep}
+            goToBackStep={element.goToBackStep}
+          />
+        )
+      })}
     </form>
   )
 }
