@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
+import { CSSTransition } from 'react-transition-group'
 
 import FormElement from './FormElement'
 
@@ -110,24 +111,33 @@ export default function Form() {
   let stepNumber = 0
 
   return (
-    <form onSubmit={handleSubmitForm} className="mt-10">
+    <form
+      onSubmit={handleSubmitForm}
+      className="mt-10 duration-300 ease-in-out trasition-all"
+    >
       {formElements.map((element, i) => {
-        if (element.show()) return
         return (
-          <FormElement
+          <CSSTransition
+            in={!element.show()}
+            timeout={550}
+            classNames="form"
+            unmountOnExit
             key={i}
-            stepNumber={++stepNumber}
-            show={currentStep === stepNumber}
-            title={element.title}
-            name={element.name}
-            onChange={element.checkOnChange ? undefined : handleSelectChange}
-            checkOnChange={element.checkOnChange}
-            value={element.value}
-            checkbox={element.checkbox}
-            options={element.options}
-            goToNextStep={element.goToNextStep}
-            goToBackStep={element.goToBackStep}
-          />
+          >
+            <FormElement
+              stepNumber={++stepNumber}
+              show={currentStep === stepNumber}
+              title={element.title}
+              name={element.name}
+              onChange={element.checkOnChange ? undefined : handleSelectChange}
+              checkOnChange={element.checkOnChange}
+              value={element.value}
+              checkbox={element.checkbox}
+              options={element.options}
+              goToNextStep={element.goToNextStep}
+              goToBackStep={element.goToBackStep}
+            />
+          </CSSTransition>
         )
       })}
     </form>
