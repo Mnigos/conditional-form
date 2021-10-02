@@ -1,6 +1,7 @@
 commitlint.config.js
 stylelint.config.js
 next.config.js
+next-end.d.ts
 .eslintrc.js
 node_modules
 coverage
