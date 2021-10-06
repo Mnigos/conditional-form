@@ -3,6 +3,7 @@ import Head from 'next/head'
 
 import Form from '~/components/Form'
 import Header from '~/components/Header'
+import FormProvider from '~/providers/FormProvider'
 
 const Home: NextPage = () => {
   return (
@@ -14,9 +15,11 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="flex flex-col items-center">
-        <Header />
+        <FormProvider>
+          <Header />
 
-        <Form />
+          <Form />
+        </FormProvider>
       </main>
     </div>
   )
