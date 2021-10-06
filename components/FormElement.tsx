@@ -102,7 +102,11 @@ export default function FormElement({
 
             <div>
               {!!goToBackStep && (
-                <button className="mr-4 btn" onClick={goToBackStep}>
+                <button
+                  className="mr-4 btn"
+                  onClick={goToBackStep}
+                  type="button"
+                >
                   Back
                 </button>
               )}
@@ -123,6 +127,7 @@ export default function FormElement({
                     : !value
                 }
                 onClick={goToNextStep}
+                type="button"
               >
                 Next
               </button>
