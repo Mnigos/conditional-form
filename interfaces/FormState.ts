@@ -1,4 +1,4 @@
-export interface InitialFormState {
+export interface FormState {
   courseType: string
   levelOfAdvancement: string
   yourSkills: string[]
