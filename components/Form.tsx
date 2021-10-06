@@ -13,6 +13,7 @@ const HTMLKnowledge = 'Knowledge of HTML'
 export default function Form() {
   const { formValues, updateFormValues } = useContext(FormContext)
   const [currentStep, setStep] = useState(1)
+  const [isSubmited, submit] = useState(false)
 
   const courseTypeOptions = [
     HTMLCourse,
@@ -61,6 +62,8 @@ export default function Form() {
 
   function handleSubmitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+
+    submit(true)
   }
 
   const formElements = [
@@ -136,30 +139,39 @@ export default function Form() {
       })}
       {currentStep > stepNumber && (
         <>
-          <button className="btn">Submit</button>
-          <div className="flex flex-col ml-16">
-            <span className="mt-4">
-              <b>Course Type: </b>
-              <span>{formValues.courseType}</span>
-            </span>
-
-            <span className="mt-4">
-              <b>Level of advancement: </b>
-              <span>{formValues.levelOfAdvancement}</span>
-            </span>
-
-            {formValues.yourSkills.length > 0 && (
+          <button className="btn" type="submit">
+            Submit
+          </button>
+          <CSSTransition
+            in={isSubmited}
+            timeout={450}
+            classNames="form"
+            unmountOnExit
+          >
+            <div className="flex flex-col ml-16">
               <span className="mt-4">
-                <b>Your Skills: </b>
-                <span>{formValues.yourSkills}</span>
+                <b>Course Type: </b>
+                <span>{formValues.courseType}</span>
               </span>
-            )}
 
-            <span className="mt-4">
-              <b>Your Name: </b>
-              <span>{formValues.name}</span>
-            </span>
-          </div>
+              <span className="mt-4">
+                <b>Level of advancement: </b>
+                <span>{formValues.levelOfAdvancement}</span>
+              </span>
+
+              {formValues.yourSkills.length > 0 && (
+                <span className="mt-4">
+                  <b>Your Skills: </b>
+                  <span>{formValues.yourSkills}</span>
+                </span>
+              )}
+
+              <span className="mt-4">
+                <b>Your Name: </b>
+                <span>{formValues.name}</span>
+              </span>
+            </div>
+          </CSSTransition>
         </>
       )}
     </form>
