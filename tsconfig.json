@@ -23,6 +23,6 @@
     },
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tsconfig.jest.json", "tailwind.config.js"],
   "exclude": ["node_modules"]
 }
