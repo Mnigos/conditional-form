@@ -4,8 +4,8 @@
     "jsx": "react",
     "baseUrl": "./src",
     "paths": {
-      "@App/*": ["src/*"],
-      "@Shared/*": ["src/Shared/*"]
+      "@App/*": ["./*"],
+      "@Shared/*": ["./Shared/*"]
     }
   },
   "moduleNameMapper": {
