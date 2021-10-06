@@ -1,5 +1,5 @@
 /* eslint-disable unicorn/no-nested-ternary */
-import { ChangeEvent, SelectHTMLAttributes } from 'react'
+import React, { ChangeEvent, SelectHTMLAttributes } from 'react'
 import { CSSTransition } from 'react-transition-group'
 
 type OnChange = SelectHTMLAttributes<

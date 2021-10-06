@@ -1,3 +1,5 @@
+import React from 'react'
+
 const Header = () => (
   <header>
     <h1 className="text-4xl font-bold">Courses</h1>
