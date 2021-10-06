@@ -30,7 +30,8 @@
     @apply rounded-md;
   }
 
-  select, input {
+  select,
+  input {
     @apply border-2;
     @apply px-1;
     @apply border-gray-300;
