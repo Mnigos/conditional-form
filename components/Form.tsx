@@ -1,24 +1,17 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 
 import FormElement from './FormElement'
 
-import { FormState } from '~/interfaces'
+import { FormContext } from '~/providers/FormProvider'
 
 const HTMLCourse = 'HTML Course'
 const ReactCourse = 'React Course'
 const VueCourse = 'Vue Course'
 const HTMLKnowledge = 'Knowledge of HTML'
 
-const initialFormState: FormState = {
-  courseType: HTMLCourse,
-  levelOfAdvancement: 'Beginner',
-  yourSkills: [],
-  name: '',
-}
-
 export default function Form() {
-  const [formValues, setFormValues] = useState(initialFormState)
+  const { formValues, updateFormValues } = useContext(FormContext)
   const [currentStep, setStep] = useState(1)
 
   const courseTypeOptions = [
@@ -53,14 +46,14 @@ export default function Form() {
   const goToBackStep = () => setStep(step => step - 1)
 
   function handleSelectChange(event: ChangeEvent<HTMLSelectElement>): void {
-    setFormValues({
+    updateFormValues({
       ...formValues,
       [event.target.name]: event.target.value,
     })
   }
 
   function handleYourSkillsChange(value: string[]): void {
-    setFormValues({
+    updateFormValues({
       ...formValues,
       yourSkills: value,
     })
