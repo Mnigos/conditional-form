@@ -13,13 +13,14 @@ const Config = {
     '/node_modules/',
     '^.+\\.module\\.(css|sass|scss)$',
   ],
-  moduleDirectories: ['node_modules', 'src'],
+  moduleDirectories: ['node_modules', '.'],
   moduleNameMapper: {
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
-    'src/(.*)': '<rootDir>/src/$1',
+    '~/(.*)': '<rootDir>/$1',
+    '@/(.*)': '<rootDir>/$1',
   },
-  modulePaths: ['node_modules', 'src'],
-  roots: ['src'],
+  modulePaths: ['node_modules', '.'],
+  roots: ['.'],
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   globals: {
