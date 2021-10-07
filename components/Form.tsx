@@ -4,6 +4,12 @@ import { CSSTransition } from 'react-transition-group'
 import FormElement from './FormElement'
 
 import { FormContext } from '~/providers/FormProvider'
+import { FormState } from '~/interfaces'
+import { initialFormValues } from '~/utils'
+
+interface FormStateWithIndex extends FormState {
+  [key: string]: string | string[]
+}
 
 const HTMLCourse = 'HTML Course'
 const ReactCourse = 'React Course'
@@ -44,7 +50,19 @@ export default function Form() {
   })()
 
   const goToNextStep = () => setStep(step => step + 1)
-  const goToBackStep = () => setStep(step => step - 1)
+  const goToBackStep = (name: string) => {
+    clearValue(name)
+
+    setStep(step => step - 1)
+  }
+
+  function clearValue(name: string) {
+    const formValuesCopy: FormStateWithIndex = { ...formValues }
+
+    formValuesCopy[name] = (initialFormValues() as FormStateWithIndex)[name]
+
+    updateFormValues(formValuesCopy as FormState)
+  }
 
   function handleSelectChange(event: ChangeEvent<HTMLSelectElement>): void {
     updateFormValues({
@@ -132,7 +150,11 @@ export default function Form() {
               checkbox={element.checkbox}
               options={element.options}
               goToNextStep={element.goToNextStep}
-              goToBackStep={element.goToBackStep}
+              goToBackStep={() =>
+                element.goToBackStep
+                  ? element.goToBackStep(element.name)
+                  : undefined
+              }
             />
           </CSSTransition>
         )
